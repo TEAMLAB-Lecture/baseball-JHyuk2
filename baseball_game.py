@@ -290,12 +290,19 @@ def main():
     flag = 0
     while True:
         user_input_number = input("Input guess number : ")
+        if user_input_number == '0':
+            break
+
         if is_validated_number(user_input_number):
             strikes, ball = get_strikes_or_ball(user_input_number, random_number)
             print(f'Strikes : {strikes} , Balls : {ball}')
             if strikes == 3:
                 while True:
                     ans = input("You win, wone more(Y/N)?")
+                    if ans == '0':
+                        flag = 1
+                        break
+
                     if is_yes(ans):
                         random_number = str(get_not_duplicated_three_digit_number())
                         print("Random Number is : ", random_number)
