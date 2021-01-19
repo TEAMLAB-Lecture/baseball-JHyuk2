@@ -31,8 +31,14 @@ def is_digit(user_input_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-    result = None
+    result = True
 
+    for i in user_input_number:
+        if i.isdigit():
+            continue
+        else:
+            result = False
+            break
     # ==================================
     return result
 
@@ -58,8 +64,12 @@ def is_between_100_and_999(user_input_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-    result = None
-
+    result = True
+    int_num = int(user_input_number)
+    if int_num > 99 and int_num < 1000:
+        pass
+    else:
+        result = False        
     # ==================================
     return result
 
@@ -86,8 +96,11 @@ def is_duplicated_number(three_digit):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-
-    result = None
+    result = True
+    # 겹치는 게 없다면 set을 해도 길이가 3
+    if len(set(three_digit)) == 3:
+        result = False
+    
     # ==================================
     return result
 
