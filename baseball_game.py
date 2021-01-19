@@ -127,7 +127,7 @@ def is_validated_number(user_input_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-    result = None
+    result = False
     if is_digit(user_input_number):
         if is_between_100_and_999(user_input_number):
             # duplicate할 경우 False가 나오기 때문에 반대로 걸어줘야 함.
