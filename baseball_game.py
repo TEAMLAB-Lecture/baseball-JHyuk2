@@ -127,8 +127,12 @@ def is_validated_number(user_input_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-
     result = None
+    if is_digit(user_input_number):
+        if is_between_100_and_999(user_input_number):
+            # duplicate할 경우 False가 나오기 때문에 반대로 걸어줘야 함.
+            result = not(is_duplicated_number(user_input_number))
+
     # ==================================
     return result
 
@@ -154,8 +158,14 @@ def get_not_duplicated_three_digit_number():
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
     # get_random_number() 함수를 사용하여 random number 생성
-
     result = None
+
+    while True:
+        tmp_num = get_random_number()
+        if is_validated_number(str(tmp_num)):
+            result = tmp_num
+            break
+
     # ==================================
     return result
 
@@ -187,8 +197,16 @@ def get_strikes_or_ball(user_input_number, random_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
+    strikes = 0
+    ball = 0
 
-    result = None
+    for a, b in zip(random_number, user_input_number):
+        if a == b:
+            strikes += 1
+        else:
+            if b in random_number:
+                ball += 1
+    result = [strikes, ball]
     # ==================================
     return result
 
@@ -219,8 +237,10 @@ def is_yes(one_more_input):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-
-    result = None
+    result = False
+    tmp = one_more_input.lower()
+    if tmp == 'y' or tmp == 'yes':
+        result = True
     # ==================================
     return result
 
@@ -252,7 +272,10 @@ def is_no(one_more_input):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
 
-    result = None
+    result = False
+    tmp = one_more_input.lower()
+    if tmp == 'n' or tmp == 'no':
+        result = True
     # ==================================
     return result
 
@@ -264,8 +287,30 @@ def main():
     print("Random Number is : ", random_number)
     # ===Modify codes below=============
     # 위의 코드를 포함하여 자유로운 수정이 가능함
+    flag = 0
+    while True:
+        user_input_number = input("Input guess number : ")
+        if is_validated_number(user_input_number):
+            strikes, ball = get_strikes_or_ball(user_input_number, random_number)
+            print(f'Strikes : {strikes} , Balls : {ball}')
+            if strikes == 3:
+                while True:
+                    ans = input("You win, wone more(Y/N)?")
+                    if is_yes(ans):
+                        random_number = str(get_not_duplicated_three_digit_number())
+                        print("Random Number is : ", random_number)
+                        break
+                    elif is_no(ans):
+                        flag = 1
+                        break
+                    else:
+                        print('Wrong Input, Input again')
+        else:
+            print('Wrong Input, Input again')
+            continue
 
-
+        if flag == 1:
+            break
     # ==================================
     print("Thank you for using this program")
     print("End of the Game")
